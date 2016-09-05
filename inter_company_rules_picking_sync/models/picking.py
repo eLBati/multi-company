@@ -23,7 +23,7 @@ class StockTransferDetails(models.TransientModel):
             if picking.sale_id.auto_purchase_order_id:
                 po = picking.sale_id.auto_purchase_order_id
             else:
-                pos = self.env['purchase.order'].search([
+                pos = self.env['purchase.order'].sudo().search([
                     ('auto_sale_order_id', '=', picking.sale_id.id)])
                 if len(pos) > 1:
                     raise UserError(_(
