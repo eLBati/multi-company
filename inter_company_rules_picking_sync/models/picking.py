@@ -32,12 +32,14 @@ class StockTransferDetails(models.TransientModel):
                 if pos:
                     po = pos[0]
             if po:
-                if len(po.picking_ids) > 1:
+                other_pickings_todo = po.picking_ids.filtered(
+                    lambda r: r.state != 'done')
+                if len(other_pickings_todo) > 1:
                     _logger.info(
                         "Too many picking for purchase order %s. Skipping"
                         % po.name)
-                elif len(po.picking_ids) == 1:
-                    other_picking = po.picking_ids[0]
+                elif len(other_pickings_todo) == 1:
+                    other_picking = other_pickings_todo[0]
                     if not other_picking.company_id.intercompany_user_id:
                         raise UserError(_(
                             "Please set an Inter Company User for company %s"
