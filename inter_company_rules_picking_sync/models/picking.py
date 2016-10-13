@@ -12,12 +12,30 @@ _logger = logging.getLogger(__name__)
 class StockTransferDetails(models.TransientModel):
     _inherit = 'stock.transfer_details'
 
+    def check_slave_picking(self, picking):
+        if picking.company_id.prevent_slave_pickings_manual_transfer:
+            if not self.env.context.get('inter_company_automation'):
+                so_model = self.env['sale.order']
+                for move in picking.move_lines:
+                    if move.purchase_line_id.order_id:
+                        slave_po = move.purchase_line_id.order_id
+                        master_so = so_model.sudo().search([
+                            ('auto_purchase_order_id', '=', slave_po.id)])
+                        if master_so:
+                            raise UserError(_(
+                                "Can't manually transfer a \"slave\" picking "
+                                "[%s] (linked to a master inter company "
+                                "picking). Please process the master picking "
+                                "of the other company"
+                            ) % picking.name)
+
     @api.one
     def do_detailed_transfer(self):
         res = super(StockTransferDetails, self).do_detailed_transfer()
         picking_model = self.env['stock.picking']
         # reading as admin to read other company's data
         picking = picking_model.sudo().browse(self.picking_id.id)
+        self.check_slave_picking(picking)
         if picking.sale_id:
             po = None
             if picking.sale_id.auto_purchase_order_id:
@@ -68,5 +86,7 @@ class StockTransferDetails(models.TransientModel):
                             'sourceloc_id': sourceloc_id,
                             'destinationloc_id': destinationloc_id,
                         })
-                    wizard.do_detailed_transfer()
+                    wizard.with_context(
+                        {'inter_company_automation': True}
+                    ).do_detailed_transfer()
         return res

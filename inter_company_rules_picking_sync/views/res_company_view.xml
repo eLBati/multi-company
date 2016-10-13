@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="view_inter_company_picking_sync">
+            <field name="name">view_inter_company_picking_sync</field>
+            <field name="inherit_id" ref="inter_company_rules.view_company_inter_change_inherit_form"/>
+            <field name="model">res.company</field>
+            <field name="arch" type="xml">
+                <field name="intercompany_user_id" position="after">
+                    <field name="prevent_slave_pickings_manual_transfer"></field>
+                </field>
+            </field>
+        </record>
+    </data>
+</openerp>

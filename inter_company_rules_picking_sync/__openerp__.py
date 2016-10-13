@@ -14,5 +14,6 @@
         "inter_company_rules",
     ],
     "data": [
+        "views/res_company_view.xml",
     ],
 }
