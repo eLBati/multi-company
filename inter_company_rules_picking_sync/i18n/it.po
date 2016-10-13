@@ -1,0 +1,61 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* inter_company_rules_picking_sync
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-10-13 15:27+0000\n"
+"PO-Revision-Date: 2016-10-13 15:27+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: inter_company_rules_picking_sync
+#: code:addons/inter_company_rules_picking_sync/models/picking.py:25
+#, python-format
+msgid "Can't manually transfer a \"slave\" picking [%s] (linked to a master inter company picking). Please process the master picking of the other company"
+msgstr "Impossibile trasferire manualmente un picking \"slave\" [%s] (collegato ad un picking "master" inter company). E' necessario processare il picking master dell'altra company"
+
+#. module: inter_company_rules_picking_sync
+#: model:ir.model,name:inter_company_rules_picking_sync.model_res_company
+msgid "Companies"
+msgstr "Aziende"
+
+#. module: inter_company_rules_picking_sync
+#: help:res.company,prevent_slave_pickings_manual_transfer:0
+msgid "Company A sells and deliveries goods to company B\n"
+"When company A transfers the delivery order, the corresponding picking of company B is automatically processed too.\n"
+"\n"
+"Setting this flag prevents company B to manually transfer \"slave\" pickings (linked to company A)"
+msgstr "L'azienda A vende e consegna beni all'azienda B\n"
+"Quando l'azienda A trasferisce l'ordine di consegna, anche il picking corrispondente dell'azienda B viene automaticamente processato\n"
+"\n"
+"Impostando questo flag si impedisce all'azienda B di trasferire manualmente i picking \"slave\" (collegati all'azienda A)"
+
+#. module: inter_company_rules_picking_sync
+#: model:ir.model,name:inter_company_rules_picking_sync.model_stock_transfer_details
+msgid "Picking wizard"
+msgstr "Picking wizard"
+
+#. module: inter_company_rules_picking_sync
+#: code:addons/inter_company_rules_picking_sync/models/picking.py:62
+#, python-format
+msgid "Please set an Inter Company User for company %s"
+msgstr "Please set an Inter Company User for company %s"
+
+#. module: inter_company_rules_picking_sync
+#: field:res.company,prevent_slave_pickings_manual_transfer:0
+msgid "Prevent slave pickings to be manually transfered"
+msgstr "Impedisci che i picking slave vengano trasferiti manualmente"
+
+#. module: inter_company_rules_picking_sync
+#: code:addons/inter_company_rules_picking_sync/models/picking.py:47
+#, python-format
+msgid "Too many purchase orders found for sale order %s"
+msgstr "Troppi ordini d'acquisto trovati per l'ordine di vendita %s"
+
