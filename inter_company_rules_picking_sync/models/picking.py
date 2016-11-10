@@ -9,6 +9,15 @@ import logging
 _logger = logging.getLogger(__name__)
 
 
+class StockPicking(models.Model):
+    _inherit = 'stock.picking'
+    master_picking_id = fields.Many2one(
+        'stock.picking', string='Master picking')
+    # used like one2one
+    slave_picking_ids = fields.One2many(
+        'stock.picking', 'master_picking_id', string='Slave picking')
+
+
 class StockTransferDetails(models.TransientModel):
     _inherit = 'stock.transfer_details'
 
@@ -58,6 +67,7 @@ class StockTransferDetails(models.TransientModel):
                         % po.name)
                 elif len(other_pickings_todo) == 1:
                     other_picking = other_pickings_todo[0]
+                    other_picking.sudo().master_picking_id = picking.id
                     if not other_picking.company_id.intercompany_user_id:
                         raise UserError(_(
                             "Please set an Inter Company User for company %s"
